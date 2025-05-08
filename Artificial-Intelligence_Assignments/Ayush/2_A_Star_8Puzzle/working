@@ -1,0 +1,41 @@
+argus@pop-os:~/Documents/AI/2_A_Star_8Puzzle$ g++ Assignment2.cpp
+argus@pop-os:~/Documents/AI/2_A_Star_8Puzzle$ ./a.out
+Enter initial state (3x3):
+1 2 3
+5 0 6
+4 7 8
+Enter goal state (3x3):
+1 2 3
+4 5 6
+7 8 0
+
+🔎 Solving using A* Search (Manhattan Distance)...
+
+State with F = 4, G = 0, H = 4:
+1 2 3 
+5 0 6 
+4 7 8 
+
+State with F = 4, G = 1, H = 3:
+1 2 3 
+0 5 6 
+4 7 8 
+
+State with F = 4, G = 2, H = 2:
+1 2 3 
+4 5 6 
+0 7 8 
+
+State with F = 4, G = 3, H = 1:
+1 2 3 
+4 5 6 
+7 0 8 
+
+State with F = 4, G = 4, H = 0:
+1 2 3 
+4 5 6 
+7 8 0 
+
+✅ Goal Reached!
+Total Steps (G): 4
+Moves (U=Up, D=Down, L=Left, R=Right): LDUU

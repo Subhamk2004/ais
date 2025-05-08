@@ -1,0 +1,78 @@
+argus@pop-os:~/Documents/AI$ g++ chatbot.cpp
+argus@pop-os:~/Documents/AI$ ./a.out
+===== BookStore Customer Service Bot =====
+Bot: Hello! Welcome to BookStore. How can I help you today?
+(Type 'bye' to exit)
+
+You: hello
+Bot: Hello! Welcome to BookStore customer service. How can I help you today?
+
+You: books
+Bot: We have a wide selection of books across various genres. What kind of book are you looking for?
+
+You: shipping cost
+Bot: Hello! Welcome to BookStore customer service. How can I help you today?
+
+You: store hours
+Bot: Our online store is available 24/7. Our physical stores are open 9 AM to 9 PM Monday through Saturday, and 10 AM to 7 PM on Sundays.
+
+You: return a book
+Bot: Returns are accepted within 30 days of purchase with a receipt for a full refund.
+
+You: price
+Bot: Our books range from $5 to $50. Bestsellers are typically $15-$25.
+
+You: ship
+Bot: Hello! Welcome to BookStore customer service. How can I help you today?
+
+You: bye
+Bot: Thank you for chatting with us. Have a great day!
+
+
+
+
+
+Chatbot Class Structure:
+
+Uses a map<string, string> to store keyword-response pairs
+Has vectors for greetings and exit phrases
+Contains helper methods for string manipulation and pattern matching
+
+
+Key Components:
+
+toLowerCase(): Converts input to lowercase for case-insensitive matching
+containsAnyKeyword(): Checks if input contains any keywords from a list
+findBestResponse(): Searches for the best response based on keywords
+getResponse(): Main interface method that processes input and returns a response
+isExitRequest(): Checks if user wants to end the conversation
+
+
+Response Database:
+
+Pre-defined responses for common bookstore queries
+Includes information about books, prices, store hours, shipping, returns, etc.
+
+
+Main Function:
+
+Sets up the chatbot and initiates a conversation loop
+Takes user input via console
+Prints bot responses
+Exits when user types a goodbye phrase
+
+
+Pattern Matching Logic:
+
+Simple keyword matching (input contains predefined keywords)
+Falls back to a default response when no match is found
+
+
+
+This chatbot demonstrates fundamental concepts like:
+
+Text processing with string manipulation
+State management (maintaining conversation context)
+Pattern matching for intent recognition
+Response generation based on identified intents
+

@@ -1,0 +1,97 @@
+🧩 Problem Summary:
+The 8-puzzle is a 3x3 board with 8 numbered tiles and 1 blank (0). The goal is to slide tiles to reach a target configuration using the minimum number of moves.
+
+🔍 What is A (A Star) Algorithm?*
+A* is a best-first search that finds the least-cost path from a given initial state to a goal state by using a formula:
+    F(n) = G(n) + H(n)
+
+G(n) = Actual cost from start to current node.
+
+H(n) = Heuristic cost from current node to goal (estimated).
+
+F(n) = Total estimated cost of the path through node n.
+
+
+🧠 Heuristic Function Used:
+We use Manhattan Distance:
+
+For each tile: distance = abs(current_row - goal_row) + abs(current_col - goal_col)
+
+Sum for all tiles (except blank 0) gives H(n).
+
+📦 Node Structure Includes:
+Current puzzle state (3x3 matrix)
+
+G (moves taken so far)
+
+H (heuristic to goal)
+
+F = G + H
+
+Path (as string like "LRUD")
+
+Blank tile position
+
+🚀 How A Works Step-by-Step*:
+Start with initial node; calculate G, H, F.
+
+Push into a priority queue (min-heap) based on F value.
+
+Pop node with smallest F.
+
+Generate all valid moves by sliding the blank (up/down/left/right).
+
+For each move:
+
+Update G (increment by 1)
+
+Calculate H using Manhattan distance
+
+Push new node into queue if not visited
+
+Stop when goal state is reached (H = 0).
+
+Reconstruct the path from start to goal.
+
+
+
+
+
+🎤 Viva Questions (with Answers)
+🔹 1. What is the A algorithm?*
+A* is an informed search algorithm that finds the shortest path from a start state to a goal state by using a cost function F(n) = G(n) + H(n), where:
+
+G(n) is the actual cost from start to node n.
+
+H(n) is the estimated cost from n to goal.
+
+🔹 2. What is the heuristic function used in your 8-puzzle?
+We use Manhattan distance as the heuristic. It adds up the distances of each tile from its goal position in terms of vertical and horizontal moves.
+
+🔹 3. Why is Manhattan distance a good heuristic?
+Because it never overestimates the minimum number of moves needed, it is admissible, making A* optimal and complete for the 8-puzzle.
+
+🔹 4. What is the significance of G, H, and F in A?*
+G = cost so far (depth or number of moves)
+
+H = estimated cost to reach goal (heuristic)
+
+F = total cost used to prioritize nodes
+
+🔹 5. What data structure did you use to implement A?*
+A priority queue (min-heap) is used to always expand the node with the lowest F value.
+
+🔹 6. Is the A algorithm guaranteed to find the shortest solution?*
+Yes, if the heuristic used is admissible (never overestimates), A* guarantees the optimal path.
+
+🔹 7. What is the role of the blank tile (0) in the puzzle?
+The blank tile represents the empty space that allows tile movement. Moves are made by swapping it with adjacent tiles.
+
+🔹 8. How do you avoid revisiting the same states?
+We maintain a visited set (using serialization of the matrix) to avoid processing duplicate states.
+
+🔹 9. Can the 8-puzzle always be solved?
+No. Only half of the possible initial states are solvable. Solvability depends on the number of inversions in the initial and goal states.
+
+🔹 10. How do you know when the goal is reached?
+When the current state matches the goal state, or equivalently, when H = 0.

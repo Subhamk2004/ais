@@ -1,0 +1,150 @@
+Basic Understanding
+
+Q1: What is Dijkstra's algorithm and what problem does it solve?
+Answer: Dijkstra's algorithm is a greedy algorithm that solves the single-source shortest path problem for a weighted graph with non-negative edge weights. It finds the shortest path from a source vertex to all other vertices in the graph. The algorithm works by maintaining a set of vertices whose shortest distance from the source is already known and greedily choosing the next vertex with the minimum distance value.
+
+
+Q2: Why is Dijkstra's algorithm classified as a greedy algorithm?
+Answer: Dijkstra's algorithm is a greedy algorithm because at each step, it makes the locally optimal choice by selecting the vertex with the minimum distance value from the set of unvisited vertices. It never reconsiders already processed vertices, making an irrevocable decision at each step. This greedy choice leads to a globally optimal solution (the shortest path) for graphs with non-negative weights.
+
+
+Q3: What are the prerequisites for Dijkstra's algorithm to work correctly?
+Answer: Dijkstra's algorithm requires:
+
+All edge weights must be non-negative
+The graph can be directed or undirected
+The graph should be connected (or we can only find paths to vertices in the connected component of the source)
+
+
+
+Algorithm Details
+
+Q4: Explain the main steps of Dijkstra's algorithm.
+Answer: The main steps are:
+
+Initialize distances of all vertices as infinite except the source vertex (set to 0)
+Create a priority queue and add the source vertex with distance 0
+While the priority queue is not empty:
+a. Extract the vertex with minimum distance
+b. For each adjacent vertex, if the distance through the current vertex is less than its current distance, update its distance
+c. Add updated vertices to the priority queue
+After the algorithm completes, the distance array contains the shortest distances from the source to all vertices
+
+
+Q5: What data structures are commonly used to implement Dijkstra's algorithm efficiently?
+Answer: The key data structures are:
+
+Priority Queue (often implemented as a min-heap): To efficiently extract the vertex with the minimum distance
+Adjacency List or Adjacency Matrix: To represent the graph
+Distance Array: To store the shortest distances from the source
+Visited Array or Set: To keep track of processed vertices
+Parent Array: To reconstruct the shortest paths
+
+
+Q6: Explain the role of the priority queue in Dijkstra's algorithm.
+Answer: The priority queue serves as the core data structure that implements the greedy choice of Dijkstra's algorithm. It efficiently maintains vertices ordered by their current distance from the source, allowing the algorithm to always select the vertex with the minimum distance next. This ensures that vertices are processed in order of increasing distance from the source, which is essential for the correctness of the algorithm.
+Time and Space Complexity
+
+
+Q7: What is the time complexity of Dijkstra's algorithm and how does it depend on the implementation?
+Answer: The time complexity depends on the implementation:
+
+Using a binary heap implementation of priority queue: O((V + E) log V)
+Using a Fibonacci heap implementation of priority queue: O(E + V log V)
+Using an array-based implementation (linear search): O(V²)
+
+Where V is the number of vertices and E is the number of edges.
+
+
+Q8: What is the space complexity of Dijkstra's algorithm?
+Answer: The space complexity is O(V + E):
+
+O(V) for the distance array, visited array, and parent array
+O(E) for the adjacency list representation of the graph
+O(V) for the priority queue in the worst case
+
+
+
+Limitations and Variants
+
+Q9: Why does Dijkstra's algorithm fail for graphs with negative edge weights?
+Answer: Dijkstra's algorithm fails with negative edge weights because it assumes that adding an edge to a path can never decrease the path's distance. With negative weights, this assumption breaks down. The algorithm might prematurely mark vertices as "processed" before finding the true shortest path. For example, a negative-weight edge could create a shortcut that the algorithm has already missed because it greedily processes vertices in increasing order of distance.
+
+
+Q10: How is Dijkstra's algorithm different from Bellman-Ford algorithm?
+Answer: Key differences:
+
+Edge weights: Dijkstra requires non-negative weights, while Bellman-Ford works with negative weights
+Functionality: Bellman-Ford can detect negative cycles, Dijkstra cannot
+Time complexity: Dijkstra is faster (O(E log V) with binary heap) than Bellman-Ford (O(V×E))
+Approach: Dijkstra is greedy, processing vertices in order of increasing distance; Bellman-Ford relaxes all edges in each of its V-1 passes
+
+
+Q11: What is bidirectional Dijkstra's algorithm?
+Answer: Bidirectional Dijkstra's algorithm is a variant that runs two simultaneous searches: one forward from the source vertex and one backward from the destination vertex. The algorithm terminates when the two searches meet in the middle. This approach can significantly reduce the number of vertices explored, especially in large graphs, making it faster than the standard algorithm for finding the shortest path between a specific pair of vertices.
+
+
+
+Code Understanding
+
+
+Q12: In the provided implementation, what is the purpose of the sptSet array?
+Answer: The sptSet (Shortest Path Tree Set) array is a boolean array that keeps track of vertices that have been processed (i.e., whose final shortest distance from the source has been determined). When a vertex is added to the SPT set, we know that we have found the shortest path to it, and we won't need to update its distance further. This is crucial for the algorithm's correctness and efficiency.
+
+
+Q13: How does the program reconstruct the shortest path from the source to any destination?
+Answer: The program uses a parent array to reconstruct the path. During the execution of Dijkstra's algorithm, whenever we update the distance of a vertex, we also update its parent to be the vertex through which we found the shorter path. After the algorithm completes, the parent array forms a tree rooted at the source. To find the path from source to any vertex, we start from the destination and follow the parent pointers back to the source, then reverse this list to get the path in the correct order.
+
+
+Q14: Why is the greater<Vertex> comparator used in the priority queue?
+Answer: The greater<Vertex> comparator is used to create a min-priority queue instead of the default max-priority queue. In Dijkstra's algorithm, we always want to process the vertex with the smallest distance next, so we need a min-priority queue. The operator>() is overloaded in the Vertex struct to compare vertices based on their distance values.
+
+
+
+Practical Applications
+
+
+Q15: What are some real-world applications of Dijkstra's algorithm?
+Answer: Real-world applications include:
+
+GPS navigation systems to find the shortest route between locations
+Network routing protocols like OSPF (Open Shortest Path First)
+Robotics for path planning and obstacle avoidance
+Telecommunications for routing data packets efficiently
+Transportation logistics for optimizing delivery routes
+Computer games for character movement and pathfinding
+
+
+Q16: How can Dijkstra's algorithm be modified to find the path with the maximum flow?
+Answer: Dijkstra's algorithm as is cannot find the path with the maximum flow. For maximum flow problems, specialized algorithms like Ford-Fulkerson or Edmonds-Karp are used. However, Dijkstra's algorithm can be adapted to find the path with the maximum bottleneck capacity (the widest path) by:
+
+Redefining the distance metric to be the bottleneck capacity (the minimum edge weight along the path)
+Instead of minimizing distance, we maximize the bottleneck capacity
+Instead of adding distances, we take the minimum of the current bottleneck and the new edge weight
+The priority queue needs to be changed to a max-priority queue
+
+
+
+Edge Cases and Optimizations
+
+
+Q17: How would you handle a case where multiple paths have the same shortest distance?
+Answer: The standard Dijkstra's algorithm finds one of the shortest paths, but doesn't guarantee which one. To handle multiple equal-length shortest paths:
+
+To find all shortest paths: Modify the algorithm to maintain a list of parents for each vertex instead of a single parent
+To find a specific shortest path based on criteria other than distance: After finding all shortest paths, apply secondary criteria (e.g., minimum number of edges, specific vertices to include/exclude)
+To break ties deterministically: Add a small preference factor to certain edges
+
+
+Q18: How can Dijkstra's algorithm be optimized for sparse graphs?
+Answer: For sparse graphs (where E ≈ V), the following optimizations can be applied:
+
+Use an adjacency list instead of an adjacency matrix to save space
+Implement the priority queue using a binary or Fibonacci heap for better performance
+Use a lazy deletion approach in the priority queue instead of decreasing keys
+Stop the algorithm once the shortest path to the specific target vertex is found (if only one path is needed)
+Consider bidirectional search if only one specific path is needed
+
+
+Q19: What happens if a vertex is unreachable from the source? How does the implementation handle this?
+Answer: If a vertex is unreachable from the source, its distance will remain at infinity (usually represented by a very large value like INT_MAX) after the algorithm completes. The implementation handles this by initializing all distances to numeric_limits<int>::max() and only updating a vertex's distance if a path to it is found. When printing the solution, the program can check if the distance is still infinity and report that the vertex is unreachable.

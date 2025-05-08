@@ -1,0 +1,7 @@
+argus@pop-os:~/Documents/AI/3_Greedy_Search$ g++ SelectionSort.cpp
+argus@pop-os:~/Documents/AI/3_Greedy_Search$ ./a.out
+Enter number of elements: 5
+Enter 5 elements separated by spaces:
+64 25 12 22 11
+Sorted array in ascending order:
+11 12 22 25 64 

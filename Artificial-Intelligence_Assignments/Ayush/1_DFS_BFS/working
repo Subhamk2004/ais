@@ -1,0 +1,29 @@
+argus@pop-os:~/Documents/AI$ g++ Assignment1.cpp
+argus@pop-os:~/Documents/AI$ ./a.out
+Enter number of vertices and edges:
+6
+7
+Enter each edge as two vertex indices (0-based):
+0 1
+0 2
+1 3
+1 4
+2 4
+3 5
+4 5
+
+Depth-First Search starting from vertex 0:
+0 1 3 5 4 2 
+
+Breadth-First Search starting from vertex 0:
+0 1 2 3 4 5 
+argus@pop-os:~/Documents/AI$ 
+
+
+
+
+
+
+
+
+

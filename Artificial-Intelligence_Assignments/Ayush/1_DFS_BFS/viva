@@ -1,0 +1,217 @@
+Viva Questions
+
+
+Working of Depth-First Search (DFS)
+Algorithm Overview
+DFS begins at a chosen start vertex, marks it visited, then for each unvisited neighbor recursively applies DFS until no unvisited neighbors remain, then backtracks 
+
+
+Implementation Details
+Visited vertices are tracked using a boolean array to prevent infinite loops in cyclic graphs 
+
+The recursive implementation implicitly uses the program call stack as a stack data structure, pushing the current vertex, exploring deeper, and popping when backtracking 
+
+As each branch is explored fully before moving to the next neighbor, DFS can be used for connectivity checks, cycle detection, and topological sorting 
+
+
+Complexity
+DFS visits each vertex and each edge at most once, giving a time complexity of O(V+E) for adjacency list representations 
+
+
+The space complexity is O(V) due to the visited array plus O(H) for the call stack—where H is the maximum recursion depth, worst‑case V 
+
+
+Working of Breadth-First Search (BFS)
+Algorithm Overview
+BFS starts at a chosen start vertex, enqueues it and marks it visited, then repeatedly dequeues a vertex, processes it, and enqueues its unvisited neighbors 
+
+
+Implementation Details
+Because the queue processes nodes in discovery order, BFS explores vertices in waves, visiting all nodes at distance d before those at distance d+1 
+
+
+BFS is particularly useful for finding shortest paths in unweighted graphs and for level-order tree traversal 
+
+
+Complexity
+BFS also runs in O(V+E) time for adjacency list representations, as each vertex and edge is enqueued and dequeued at most once 
+
+
+The space complexity is O(V) due to storing the visited array and the queue, which in the worst case may hold O(V) vertices 
+
+
+
+
+
+Depth-First Search (DFS)
+
+
+Question 1: What is depth-first search and how does it differ from breadth-first search?
+Depth-First Search (DFS) is a graph traversal algorithm that explores as far as possible along each branch before backtracking. Starting from a chosen node, it visits one adjacent node, then moves to that node's adjacent node, and continues this pattern, going deeper into the graph before exploring other branches.
+Key differences from Breadth-First Search:
+
+DFS explores a path all the way to its end before exploring alternatives, while BFS explores all neighbors at the current level before moving to the next level
+DFS typically uses a stack (or recursion) while BFS uses a queue
+DFS may not find the shortest path in unweighted graphs (BFS does)
+DFS is often better for problems like maze solving, topological sorting, or cycle detection
+DFS generally requires less memory than BFS for wide graphs
+
+
+Question 2: Describe how recursion and backtracking are used in the DFS implementation.
+In a recursive DFS implementation:
+
+Recursion: The algorithm uses the call stack to implicitly track the traversal path:
+
+The main DFS function calls itself for each unvisited neighbor
+Each recursive call explores one branch completely before returning
+When a recursive call returns, the control goes back to the previous node in the path
+
+Backtracking: This happens naturally when:
+
+A node has no unvisited neighbors (leaf node or dead end)
+The recursion "backs up" to the previous node in the path
+From there, it continues exploration of other unvisited neighbors
+
+The recursive structure inherently implements the backtracking, as the algorithm automatically returns to previous decision points when it reaches a dead end.
+
+
+Question 3: What data structure does DFS use implicitly and why?
+DFS implicitly uses a stack data structure. In the recursive implementation, this stack is the program's call stack that maintains the chain of recursive function calls. In the iterative implementation, an explicit stack is used.
+A stack is ideal for DFS because:
+
+It follows the Last-In-First-Out (LIFO) principle, which matches the nature of going deep into one path before exploring alternatives
+It efficiently keeps track of the current exploration path
+It naturally supports backtracking - when we hit a dead end, we pop the stack to return to the previous node
+The most recently discovered unexplored node is always at the top of the stack, ready to be visited next
+
+
+Question 4: How does DFS detect cycles in an undirected graph?
+DFS can detect cycles in an undirected graph by keeping track of visited nodes and parent relationships:
+
+Maintain a visited set/array to mark nodes that have been processed
+During DFS traversal, for each node:
+
+Mark the current node as visited
+For each adjacent node:
+
+If it's not visited, recursively call DFS on it, passing the current node as its parent
+If it is already visited AND it's not the parent of the current node, then we've found a cycle
+(This means we've found an alternative path to an already visited node)
+
+The key insight is that in an undirected graph, when we visit a neighbor, we expect to see only one previously visited node - the parent we came from. If we encounter any other previously visited node, it means there's another path to it, indicating a cycle.
+
+
+Question 5: Explain the time and space complexity of DFS on a graph with V vertices and E edges.
+Time Complexity: O(V + E)
+
+Each vertex is processed once: O(V)
+Each edge is considered once in directed graphs and twice in undirected graphs: O(E)
+The total time complexity is therefore O(V + E)
+
+Space Complexity: O(V)
+
+The visited array/set requires O(V) space
+In the worst case (a skewed graph or a linear chain), the recursion stack or explicit stack can hold all V vertices: O(V)
+Additional data structures like adjacency lists also use O(V + E) space, but this is typically considered part of the input
+Therefore, the auxiliary space complexity is O(V)
+
+
+
+
+
+Breadth-First Search (BFS)
+
+Question 1: What is breadth-first search and in what scenarios is it particularly useful?
+Breadth-First Search (BFS) is a graph traversal algorithm that explores all vertices at the current depth level before moving to vertices at the next depth level. It starts at a selected node and explores all its neighbors before moving to their neighbors.
+BFS is particularly useful in:
+
+Finding the shortest path in unweighted graphs
+Network broadcasting, where information needs to spread level by level
+Finding all nodes within a connected component
+Web crawling applications
+Social network analysis (finding people within n connections)
+Puzzle solving where the shortest solution is required (like Rubik's cube, sliding puzzles)
+Testing if a graph is bipartite
+Finding the shortest cycle in an undirected graph
+
+Question 2: What data structure is used in BFS and how does it ensure level-by-level traversal?
+BFS uses a queue data structure, which follows the First-In-First-Out (FIFO) principle.
+The queue ensures level-by-level traversal because:
+
+Initially, the start node is enqueued
+When a node is dequeued, all its unvisited neighbors are enqueued
+Since the queue processes elements in the order they were added, all nodes at the current level are processed before any nodes at the next level
+This guarantees that nodes are visited in order of their distance from the start node
+
+The queue acts as a frontier between discovered and undiscovered vertices, always expanding outward one level at a time, which creates the characteristic "wavefront" pattern of BFS traversal.
+Question 3: How would you modify BFS to compute the shortest path from the start vertex to all other vertices?
+To compute shortest paths using BFS (in an unweighted graph):
+
+Create a distances array/map initialized to infinity for all vertices except the start vertex (which is 0)
+Create a predecessor array/map to track the path, initialized to null/undefined
+Use a queue for BFS traversal, starting with the source vertex
+When visiting each neighbor:
+
+If it hasn't been visited (distance is still infinity):
+
+Set its distance to the current vertex's distance + 1
+Set its predecessor to the current vertex
+Enqueue it
+
+
+
+
+After BFS completes:
+
+The distances array contains the shortest path length to each vertex
+The predecessor array allows reconstruction of the actual path by following the chain of predecessors from destination to source
+
+
+
+This works because BFS guarantees that the first time a node is discovered, it's via the shortest path from the source.
+Question 4: Discuss the time and space complexity of BFS and compare it with DFS.
+BFS Time Complexity: O(V + E)
+
+Each vertex is dequeued once: O(V)
+Each edge is examined once in directed graphs and twice in undirected graphs: O(E)
+Total: O(V + E)
+
+BFS Space Complexity: O(V)
+
+In the worst case, the queue might contain all vertices of the graph: O(V)
+The visited array/map takes O(V) space
+Additional data structures like distances and predecessors also take O(V) space
+
+Comparison with DFS:
+
+Time Complexity: Both BFS and DFS have the same time complexity of O(V + E)
+Space Complexity:
+
+BFS typically uses more memory for wide graphs since it might need to store many nodes at the same level
+DFS uses more memory for deep graphs due to the recursion stack
+In general, BFS tends to use more space than DFS for most real-world graphs
+
+
+Traversal Pattern:
+
+BFS explores level by level (breadth-oriented)
+DFS explores path by path (depth-oriented)
+
+
+Use Cases:
+
+BFS is better for shortest path in unweighted graphs
+DFS is often simpler for tasks like topological sorting and cycle detection
+
+
+
+Question 5: Can BFS be implemented recursively? Why or why not?
+While BFS can technically be implemented recursively, it's generally not practical or efficient for several reasons:
+
+Queue Simulation: A recursive BFS would need to simulate a queue's behavior using recursion, which goes against the natural stack-based nature of recursion
+Level Management: To maintain the level-by-level traversal, a recursive implementation would need complex logic to track which nodes belong to the current level
+Stack Overflow Risk: A recursive BFS implementation could easily cause stack overflow for large graphs, as it would potentially need to hold many function calls in the call stack
+Inefficiency: The resulting implementation would be needlessly complex and less efficient than the standard iterative approach
+Unnatural Fit: Recursion naturally implements DFS because the call stack matches the stack behavior needed. For BFS, recursion and the required queue behavior are at odds
+
+For these reasons, BFS is almost always implemented iteratively using an explicit queue data structure, while DFS is commonly implemented either recursively or iteratively.
