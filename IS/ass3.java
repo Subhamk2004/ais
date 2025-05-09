@@ -1,12 +1,14 @@
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.KeyGenerator;
-import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
+import java.util.Scanner;
 
 class ass3 {
     public static void main(String[] args) throws Exception {
-        String plainText = "Namaste India";
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter text to encrypt: ");
+        String plainText = scanner.nextLine();
 
         KeyGenerator keyGen = KeyGenerator.getInstance("DES");
         SecretKey secretKey = keyGen.generateKey();
